@@ -1,0 +1,67 @@
+1. Рецепт:
+  1. ID
+  2. Name
+  3. Изображение
+  4. Описание
+  5. Время готовки
+2. Шаги рецепта:
+  1. Номер
+  2. Описание
+  3. Изображение
+
+query{
+  recipes   {
+    id
+    name
+    description
+    steps {
+      id
+      number
+      cover
+      description
+    }
+  }
+}
+
+
+query( $id:ID ) {
+  recipe(id:$id)   {
+    id
+    name
+    description
+    cover    
+    steps {
+      id
+      number
+      cover
+      description
+    }
+  }
+}
+
+mutation($name:String!, $description:String!, $cookingTime:String!, $cover:String!, $steps:[stepInput]!){
+  insertOneRecipe3(name:$name, description:$description, cookingTime: $cookingTime, cover:$cover, steps:$steps){
+    id
+    name
+    description
+    cover
+    cookingTime    
+  }
+}
+
+Обновление:
+mutation($id:ID, $name:String!, $description:String!, $cookingTime:String!, $cover:String!, 
+  $ingredients:String!,
+  $steps:[stepInput]!){
+  updateRecipe(id:$id, name:$name, description:$description, cookingTime: $cookingTime, cover:$cover, 
+    ingredients:$ingredients,
+    steps:$steps){    
+    name
+  }
+}
+Удаление:
+mutation($id:ID){
+  deleteRecipe(id:$id){    
+    name
+  }
+}
