@@ -2,7 +2,7 @@
 
 ![Скриншот](https://raw.githubusercontent.com/SLKarol/cookbook/main/screenshots/1.png)
 
-![Скриншот](https://raw.githubusercontent.com/SLKarol/cookbook/main/screenshots/1.png)
+![Скриншот](https://raw.githubusercontent.com/SLKarol/cookbook/main/screenshots/2.png)
 
 В данном портфолио используется MongoDB, GraphQL _(Apollo client)_, MobX, Material UI.
 
