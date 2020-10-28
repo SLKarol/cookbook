@@ -1,10 +1,10 @@
 import React from "react";
 import Button from "@material-ui/core/Button";
 import DeleteIcon from "@material-ui/icons/Delete";
-import { useMutation } from "@apollo/client";
+import { Reference, StoreObject, useMutation } from "@apollo/client";
 import { useParams, useHistory } from "react-router-dom";
 
-import { DELETE_RECIPE, GET_RECIPES_REVIEW } from "querys/recipe";
+import { DELETE_RECIPE } from "querys/recipe";
 
 import { TOnClick } from "types/types";
 import withHocs, { Props } from "../ButtonSave/ButtonSaveHoc";
@@ -21,25 +21,32 @@ const ButtonDelete: React.FC<Props> = ({ classes }) => {
   const { onApolloError, showBackdrop } = useUiStore();
 
   /**
-   * Настройка мутации
-   */
-  const settingsMutation = {
-    refetchQueries: [{ query: GET_RECIPES_REVIEW }],
-    awaitRefetchQueries: true,
-    ignoreResults: true,
-    onError: onApolloError,
-    onCompleted: () => {
-      showBackdrop(false);
-      history.push("/");
-    },
-  };
-
-  /**
    * Удалить рецепт
    */
   const [deleteRecipe] = useMutation<{ updateRecipe: string }, { id: string }>(
     DELETE_RECIPE,
-    settingsMutation
+    {
+      onError: onApolloError,
+      onCompleted: () => {
+        showBackdrop(false);
+        history.push("/");
+      },
+      update: (cache) => {
+        try {
+          cache.modify({
+            fields: {
+              // Обновить список рецептов (recipes - удалить из них тот, который юзер удалил)
+              recipes(existingRecipes, { readField }) {
+                return existingRecipes.filter(
+                  (commentRef: Reference | StoreObject | undefined) =>
+                    id !== readField("id", commentRef)
+                );
+              },
+            },
+          });
+        } catch (_) {}
+      },
+    }
   );
 
   const onClickDelete: TOnClick = (e) => {
