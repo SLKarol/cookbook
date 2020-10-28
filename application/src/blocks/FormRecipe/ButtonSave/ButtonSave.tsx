@@ -4,7 +4,7 @@ import SaveIcon from "@material-ui/icons/Save";
 import { useMutation } from "@apollo/client";
 import { useParams, useHistory } from "react-router-dom";
 
-import { ADD_RECIPE, UPDATE_RECIPE, GET_RECIPES_REVIEW } from "querys/recipe";
+import { ADD_RECIPE, UPDATE_RECIPE, GET_RECIPE } from "querys/recipe";
 import { SaveRecipe } from "types/recipe";
 import { TOnClick } from "types/types";
 
@@ -27,9 +27,7 @@ const ButtonSave: React.FC<Props> = ({ classes }) => {
    * Настройки мутаций
    */
   const settingsMutation = {
-    refetchQueries: [{ query: GET_RECIPES_REVIEW }],
     awaitRefetchQueries: true,
-    ignoreResults: true,
     onError: onApolloError,
     onCompleted: () => {
       showBackdrop(false);
@@ -42,17 +40,28 @@ const ButtonSave: React.FC<Props> = ({ classes }) => {
    */
   const [addRecipe] = useMutation<{ insertOneRecipe: string }, SaveRecipe>(
     ADD_RECIPE,
-    settingsMutation
+    {
+      ...settingsMutation,
+      update: (cache) => {
+        cache.reset();
+      },
+    }
   );
 
   /**
    * Редактировать рецепт
    */
-  const [editRecipe] = useMutation<{ updateRecipe: string }, SaveRecipe>(
-    UPDATE_RECIPE,
-    settingsMutation
-  );
+  const [editRecipe] = useMutation<
+    { updateRecipe: { steps: { id: string }[] } },
+    SaveRecipe
+  >(UPDATE_RECIPE, {
+    ...settingsMutation,
+    refetchQueries: [{ query: GET_RECIPE, variables: { id: valuesToSave.id } }],
+  });
 
+  /**
+   * Сохранить рецепт
+   */
   const onClickSave: TOnClick = (e) => {
     e.preventDefault();
     onSave();

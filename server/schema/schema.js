@@ -132,6 +132,18 @@ const Mutation = new GraphQLObjectType({
         },
       },
       async resolve(parent, args) {
+        // Удалить все шаги из этого
+        await Steps.deleteMany({ recipeId: args.id });
+        // Записать шаги рецепта в БД
+        args.steps.forEach(async (step) => {
+          const newStep = new Steps({
+            number: step.number,
+            cover: step.cover,
+            description: step.description,
+            recipeId: args.id,
+          });
+          await newStep.save();
+        });
         let re = Recipes.findByIdAndUpdate(
           args.id,
           {
@@ -145,18 +157,6 @@ const Mutation = new GraphQLObjectType({
           },
           { new: true }
         );
-        // Удалить все шаги из этого
-        await Steps.deleteMany({ recipeId: args.id });
-        // Записать шаги рецепта в БД
-        args.steps.forEach(async (step) => {
-          const newStep = new Steps({
-            number: step.number,
-            cover: step.cover,
-            description: step.description,
-            recipeId: args.id,
-          });
-          await newStep.save();
-        });
         return re;
       },
     },

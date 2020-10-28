@@ -83,7 +83,9 @@ export const UPDATE_RECIPE = gql`
       cover: $cover
       steps: $steps
     ) {
-      name
+      steps {
+        id
+      }
     }
   }
 `;
