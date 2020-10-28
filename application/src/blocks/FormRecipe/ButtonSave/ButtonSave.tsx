@@ -1,7 +1,7 @@
 import React from "react";
 import Button from "@material-ui/core/Button";
 import SaveIcon from "@material-ui/icons/Save";
-import { useMutation } from "@apollo/client";
+import { gql, useMutation } from "@apollo/client";
 import { useParams, useHistory } from "react-router-dom";
 
 import { ADD_RECIPE, UPDATE_RECIPE, GET_RECIPE } from "querys/recipe";
@@ -31,22 +31,57 @@ const ButtonSave: React.FC<Props> = ({ classes }) => {
     onError: onApolloError,
     onCompleted: () => {
       showBackdrop(false);
-      history.push("/");
     },
   };
 
   /**
    * Добавить рецепт
    */
-  const [addRecipe] = useMutation<{ insertOneRecipe: string }, SaveRecipe>(
-    ADD_RECIPE,
-    {
-      ...settingsMutation,
-      update: (cache) => {
-        cache.reset();
-      },
-    }
-  );
+  const [addRecipe] = useMutation<
+    { insertOneRecipe: { id: string } },
+    SaveRecipe
+  >(ADD_RECIPE, {
+    ...settingsMutation,
+    update: (cache, { data }) => {
+      try {
+        cache.modify({
+          fields: {
+            // Добавить в список рецептов созданный рецепт
+            recipes(existingRecipes) {
+              const {
+                steps,
+                cookingTime,
+                id,
+                ingredients,
+                ...recipe
+              } = valuesToSave;
+              // Создать элемент кэша
+              const newRecipeRef = cache.writeFragment({
+                data: {
+                  ...recipe,
+                  id: data?.insertOneRecipe.id,
+                  __typename: "Recipe",
+                },
+                fragment: gql`
+                  fragment NewRecipe on Recipe {
+                    id
+                    name
+                    description
+                    cover
+                  }
+                `,
+              });
+              // Добавить созданную запись в кэш.
+              // Положить её наверх списка.
+              return [newRecipeRef].concat(existingRecipes);
+            },
+          },
+        });
+      } catch (e) {
+        console.log("e :>> ", e);
+      }
+    },
+  });
 
   /**
    * Редактировать рецепт
@@ -71,6 +106,8 @@ const ButtonSave: React.FC<Props> = ({ classes }) => {
     if (!id) {
       addRecipe({
         variables: valuesToSave,
+      }).then(() => {
+        history.push("/");
       });
     } else {
       // ... Другая процедура для редактирования
