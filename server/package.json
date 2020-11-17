@@ -14,8 +14,8 @@
     "express": "^4.17.1",
     "express-graphql": "^0.11.0",
     "graphql": "^15.4.0",
-    "mongodb": "^3.6.2",
-    "mongoose": "^5.10.11",
+    "mongodb": "^3.6.3",
+    "mongoose": "^5.10.15",
     "nodemon": "^2.0.6"
   }
 }
