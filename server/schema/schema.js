@@ -13,6 +13,16 @@ const {
 const Steps = require("../models/step");
 const Recipes = require("../models/recipe");
 
+const StepType = new GraphQLObjectType({
+  name: "Step",
+  fields: () => ({
+    id: { type: GraphQLID },
+    number: { type: new GraphQLNonNull(GraphQLInt) },
+    cover: { type: GraphQLString },
+    description: { type: new GraphQLNonNull(GraphQLString) },
+  }),
+});
+
 const RecipeType = new GraphQLObjectType({
   name: "Recipe",
   fields: () => ({
@@ -22,39 +32,17 @@ const RecipeType = new GraphQLObjectType({
     description: { type: new GraphQLNonNull(GraphQLString) },
     cookingTime: { type: new GraphQLNonNull(GraphQLString) },
     ingredients: { type: new GraphQLNonNull(GraphQLString) },
-    steps: {
-      type: new GraphQLList(StepType),
-      resolve(parent, args) {
-        return Steps.find({ recipeId: parent.id }).sort({ number: 1 });
-      },
-    },
-  }),
-});
-
-const StepType = new GraphQLObjectType({
-  name: "Step",
-  fields: () => ({
-    id: { type: GraphQLID },
-    number: { type: new GraphQLNonNull(GraphQLInt) },
-    cover: { type: GraphQLString },
-    description: { type: new GraphQLNonNull(GraphQLString) },
-    recipe: {
-      type: RecipeType,
-      resolve(parent) {
-        return Recipes.findById(parent.recipeId);
-      },
-    },
+    steps: { type: new GraphQLList(StepType) },
   }),
 });
 
 const StepInputType = new GraphQLInputObjectType({
   name: "stepInput",
-  description: "Создаваемые шаги",
+  description: "Шаги рецепта",
   fields: {
-    number: { type: new GraphQLNonNull(GraphQLInt) },
     cover: { type: GraphQLString },
     description: { type: new GraphQLNonNull(GraphQLString) },
-    recipeId: { type: GraphQLString },
+    number: { type: new GraphQLNonNull(GraphQLInt) },
   },
 });
 
@@ -100,21 +88,10 @@ const Mutation = new GraphQLObjectType({
           cookingTime: args.cookingTime,
           cover: args.cover,
           ingredients: args.ingredients,
+          steps: args.steps,
         });
         // Сохранить
         await recipe.save();
-        // После сохранения узнать id рецепта
-        recipe.id = recipe._id;
-        // Записать шаги рецепта в БД
-        args.steps.forEach(async (step) => {
-          const newStep = new Steps({
-            number: step.number,
-            cover: step.cover,
-            description: step.description,
-            recipeId: recipe.id,
-          });
-          await newStep.save();
-        });
         return recipe;
       },
     },
@@ -131,20 +108,8 @@ const Mutation = new GraphQLObjectType({
           type: new GraphQLNonNull(new GraphQLList(StepInputType)),
         },
       },
-      async resolve(parent, args) {
-        // Удалить все шаги из этого
-        await Steps.deleteMany({ recipeId: args.id });
-        // Записать шаги рецепта в БД
-        args.steps.forEach(async (step) => {
-          const newStep = new Steps({
-            number: step.number,
-            cover: step.cover,
-            description: step.description,
-            recipeId: args.id,
-          });
-          await newStep.save();
-        });
-        let re = Recipes.findByIdAndUpdate(
+      resolve(parent, args) {
+        return Recipes.findByIdAndUpdate(
           args.id,
           {
             $set: {
@@ -153,18 +118,17 @@ const Mutation = new GraphQLObjectType({
               cookingTime: args.cookingTime,
               cover: args.cover,
               ingredients: args.ingredients,
+              steps: args.steps,
             },
           },
           { new: true }
         );
-        return re;
       },
     },
     deleteRecipe: {
       type: RecipeType,
       args: { id: { type: GraphQLID } },
-      async resolve(parent, args) {
-        await Steps.deleteMany({ recipeId: args.id });
+      resolve(parent, args) {
         return Recipes.findByIdAndRemove(args.id);
       },
     },

@@ -28,7 +28,6 @@ export const GET_RECIPE = gql`
       ingredients
       steps {
         id
-        number
         cover
         description
       }
