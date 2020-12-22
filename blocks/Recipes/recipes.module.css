@@ -1,0 +1,20 @@
+.recipes {
+  display: grid;
+  grid-gap: 20px;
+}
+
+@media (min-width: 500px) {
+
+  .recipes {
+    grid-template-columns: 1fr;
+  }
+
+}
+
+@media (min-width: 700px) {
+
+  .recipes {
+    grid-template-columns: 1fr 1fr;
+  }
+
+}

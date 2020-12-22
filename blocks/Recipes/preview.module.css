@@ -1,0 +1,44 @@
+.preview {
+  display: grid;
+  grid-gap: 10px
+}
+
+.author {
+  font-size: 0.8em;
+  margin-top: auto;
+  font-weight: bold;
+}
+
+.description {
+  display: flex;
+  flex-direction: column;
+}
+
+@media (min-width: 500px) {
+
+  .preview {
+    grid-template-columns: 1fr;
+  }
+
+}
+
+@media (min-width: 700px) {
+
+  .preview {
+    grid-template-columns: 1fr 2fr;
+  }
+
+}
+
+.link {
+  color: #669b02;
+
+}
+
+.link:hover {
+  text-decoration: underline;
+}
+
+.link:visited {
+  opacity: 0.8;
+}

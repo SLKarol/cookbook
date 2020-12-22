@@ -1,0 +1,17 @@
+.block {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  grid-template-rows: 1fr;
+}
+
+.button {
+  grid-row: 2;
+}
+
+.mainContent {
+  grid-column: 1/3;
+}
+
+.inputFile {
+  display: none;
+}

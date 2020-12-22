@@ -1,30 +1,27 @@
 # Кулинарная книга
 
+Перед запуском проекта необходимо в его корневом каталоге создать файл **.env.local** и там задать следующие переменные:
+
+- CLOUDINARY_CLOUD_NAME
+- CLOUDINARY_API_KEY
+- CLOUDINARY_API_SECRET
+- MONGODB_URI
+
+Первые три это настройки подключения к [`Cloudinary`](http://cloudinary.com/), MONGODB_URI - подключение к БД MongoDB.
+
+У Вас должно быть примерно такое содержание:
+
+```
+CLOUDINARY_CLOUD_NAME='somelogin2'
+CLOUDINARY_API_KEY='2128506'
+CLOUDINARY_API_SECRET='api5code'0secret'
+MONGODB_URI='mongodb+srv://loginDB:passwordDB@cluster/dbName'
+```
+
+Локальный запуск: **npm run dev**.
+
+## Скриншот
+
 ![Скриншот](https://raw.githubusercontent.com/SLKarol/cookbook/main/screenshots/1.png)
 
 ![Скриншот](https://raw.githubusercontent.com/SLKarol/cookbook/main/screenshots/2.png)
-
-В данном портфолио используется MongoDB, GraphQL _(Apollo client)_, MobX, Material UI.
-
-Здесь имеется две реализации MobX-стора: 1) стейт для ввода рецептов; 2) стейт для хранения состояния ui.
-
-## Структура клиентской части _(то есть назначение каталогов src/...)_:
-
-- **components** Самостоятельные компоненты
-- **blocks** Скомпонованные компоненты, объединённые какой-то задачей, целью
-- **pages** Компоненты-страницы, участвуют в роутере
-- **stores** Настройки MobX - хранилища
-- **querys** Запросы graphql
-- **types** Типы для typescript
-
-## Быстрый старт серверной части _(учитывая, что проект у Вас уже клонирован)_:
-
-- Перейдите в папку **server** и установите зависимости: `npm install`
-- Запустите проект: `npm run dev`
-
-## Быстрый старт приложения _(учитывая, что проект у Вас уже клонирован)_:
-
-- Перейдите в папку **server** и установите зависимости: `npm install`
-  - Запустите сервер: `npm run dev`
-- Перейдите в папку **application** и установите зависимости: `npm install`
-  - Запустите проект: `npm start`

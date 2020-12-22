@@ -1,0 +1,6 @@
+.footer {
+  margin-top: 20px;
+  display: grid;
+  grid-template-columns: auto auto 1fr;
+  column-gap: 10px;
+}

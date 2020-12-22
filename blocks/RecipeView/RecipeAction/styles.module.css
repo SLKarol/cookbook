@@ -1,0 +1,19 @@
+.ul {
+  display: flex;
+}
+
+.action {
+  margin-left: auto;
+}
+
+@media (min-width: 500px) {
+  .actionLast {
+    margin-left: auto;
+  }
+}
+
+@media (min-width: 700px) {
+  .actionLast {
+    margin-left: 20px;
+  }
+}

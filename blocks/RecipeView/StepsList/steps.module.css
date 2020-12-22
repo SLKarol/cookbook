@@ -1,0 +1,33 @@
+.step {
+  display: grid;
+  column-gap: 8px;
+  row-gap: 4px;
+}
+
+.cover {
+  width: 100%;
+  max-width: 460px;
+}
+
+.wrap {
+  white-space: pre-wrap;
+}
+
+.hr {
+  color: #a5c100;
+  width: 75%;
+}
+
+@media (min-width: 500px) {
+
+  .step {
+    grid-template-columns: 1fr;
+  }
+
+}
+
+@media (min-width: 700px) {
+  .step {
+    grid-template-columns: auto 1fr;
+  }
+}

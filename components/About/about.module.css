@@ -1,0 +1,51 @@
+.div {
+  display: grid;
+  column-gap: 10px;
+  margin: 20px 0px;
+}
+
+.description {
+  display: flex;
+  flex-direction: column;
+}
+
+.header {
+  font-size: 3em;
+  line-height: 1em;
+  letter-spacing: -1px;
+  text-transform: uppercase;
+  padding-right: 15px;
+  margin: 0 0 20px 0;
+}
+
+.p {
+  font-family: 'Oswald', Arial, sans-serif;
+  font-size: 1.9em;
+  line-height: 1.2em;
+  letter-spacing: -2px;
+  padding-right: 15px;
+
+}
+
+.img {
+  border: 5px solid #ccc;
+  border-radius: 5px;
+  width: 100%;
+  display: none;
+}
+
+@media (min-width: 500px) {
+  .div {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (min-width: 700px) {
+  .div {
+    grid-template-columns: 1fr auto;
+  }
+
+  .img {
+    display: inline;
+  }
+}

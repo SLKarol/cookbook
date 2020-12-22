@@ -1,0 +1,22 @@
+.form {
+  display: grid;
+  column-gap: 10px;
+  row-gap: 20px;
+}
+
+.image {
+  display: block;
+}
+
+
+@media (min-width: 500px) {
+  .inputSmall {
+    width: 100%;
+  }
+}
+
+@media (min-width: 700px) {
+  .inputSmall {
+    width: 30%;
+  }
+}
