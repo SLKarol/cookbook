@@ -1,5 +1,5 @@
 import { Step } from './step';
-import { OnlyStringTypes } from 'types';
+import { ErrorApi, OnlyStringTypes } from 'types';
 
 /**
  * Рецепт
@@ -70,3 +70,18 @@ export interface RecipePreview {
 	description: string;
 	name: string;
 }
+
+export type ResponsePreview = {
+	data: {
+		recipes: {
+			recipes: RecipePreview[];
+			totalRecipes: number;
+		};
+	};
+	errors?: ErrorApi[];
+};
+
+export type ResponseListRecipe = {
+	data: { recipe: RecipeResponse };
+	errors?: ErrorApi[];
+};

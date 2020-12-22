@@ -6,7 +6,7 @@ import { ErrorApi } from 'types';
 import { useStore } from 'store';
 
 import Login from 'blocks/User/Login/Login';
-import { fetchGraphQl } from 'lib/apolloClient';
+import { fetchGraphQL } from 'lib/apolloClient';
 
 const loginQuery = `query UserLogin($email: String!, $password: String!) {
 	login(email: $email, password: $password) {
@@ -41,7 +41,7 @@ const PageLogin: React.FC = () => {
 
 		try {
 			// Логин пользователя
-			const resData = await fetchGraphQl(JSON.stringify(graphqlQuery));
+			const resData = await fetchGraphQL(JSON.stringify(graphqlQuery));
 			setFormBusy(false);
 			if (resData.errors && resData.errors[0].status === 422) {
 				setErrorMsg('Валидация не удалась.');

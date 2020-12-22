@@ -4,7 +4,7 @@ import { useRouter } from 'next/router';
 
 import { ErrorApi } from 'types';
 import { useStore } from 'store';
-import { fetchGraphQl } from 'lib/apolloClient';
+import { fetchGraphQL } from 'lib/apolloClient';
 
 import SignUp from 'blocks/User/SignUp/SignUp';
 
@@ -45,7 +45,7 @@ const PageSignUp: React.FC = () => {
 		};
 		try {
 			// Регистрация пользователя
-			const resData = await fetchGraphQl(JSON.stringify(graphqlQuery));
+			const resData = await fetchGraphQL(JSON.stringify(graphqlQuery));
 			if (resData.errors && resData.errors[0].status === 422) {
 				setErrorMsg('Валидация не удалась.');
 			}

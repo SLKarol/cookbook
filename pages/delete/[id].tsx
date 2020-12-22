@@ -4,7 +4,7 @@ import Link from 'next/link';
 import { observer } from 'mobx-react-lite';
 
 import { ErrorApi } from 'types';
-import { fetchGraphQl } from 'lib/apolloClient';
+import { fetchGraphQL } from 'lib/apolloClient';
 
 import Layout from 'components/Layout/Layout';
 import ErrorFetchGraphQL from 'components/ErrorFetchGraphQL/ErrorFetchGraphQL';
@@ -30,7 +30,7 @@ const Delete = () => {
 				query: queryRecipe,
 				variables: { recipeId: id },
 			};
-			const resData = await fetchGraphQl(JSON.stringify(graphqlQuery));
+			const resData = await fetchGraphQL(JSON.stringify(graphqlQuery));
 			const { recipe } = resData.data;
 			setName(recipe.name);
 		}
@@ -49,7 +49,7 @@ const Delete = () => {
 				deleteRecipe(id: "${id}")
 			}`,
 		};
-		const resData = await fetchGraphQl(JSON.stringify(graphqlQuery));
+		const resData = await fetchGraphQL(JSON.stringify(graphqlQuery));
 		const { errors } = resData;
 		setWorking(false);
 		if (!errors) {

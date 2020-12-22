@@ -1,7 +1,7 @@
 import { useRouter } from 'next/router';
 import useSWR from 'swr';
 
-import { RecipePreview } from 'types/recipe';
+import { ResponsePreview } from 'types/recipe';
 import { fetchGraphQL } from 'lib/apolloClient';
 
 import Recipes from 'blocks/Recipes/Recipes';
@@ -9,6 +9,7 @@ import Layout from 'components/Layout/Layout';
 import Pagination from 'components/Pagination/Pagination';
 import About from 'components/About/About';
 import Loading from 'components/Loading/Loading';
+import ErrorFetchGraphQL from 'components/ErrorFetchGraphQL/ErrorFetchGraphQL';
 
 const RECORDS_PER_PAGE = 4;
 
@@ -28,14 +29,6 @@ const queryRecipes = `query getRecipes($page: Int, $perPage: Int) {
 		totalRecipes
   }
 }`;
-type Props = {
-	data: {
-		recipes: {
-			recipes: RecipePreview[];
-			totalRecipes: number;
-		};
-	};
-};
 
 const ListRecipes: React.FC = () => {
 	const { query } = useRouter();
@@ -44,13 +37,35 @@ const ListRecipes: React.FC = () => {
 		query: queryRecipes,
 		variables: { page: +id },
 	};
-	const { data } = useSWR<Props>(JSON.stringify(graphqlQuery), fetchGraphQL);
-	const recipes = data?.data.recipes.recipes || [];
-	const totalRecipes = data?.data.recipes.totalRecipes || 0;
+	const { data } = useSWR<ResponsePreview>(
+		JSON.stringify(graphqlQuery),
+		fetchGraphQL
+	);
+
+	if (!data) {
+		return (
+			<Layout>
+				<Loading />
+			</Layout>
+		);
+	}
+	if (data.errors) {
+		return (
+			<Layout>
+				<ErrorFetchGraphQL errors={data.errors} />
+			</Layout>
+		);
+	}
+
+	const {
+		data: {
+			recipes: { recipes = [], totalRecipes = 0 },
+		},
+	} = data;
+
 	return (
 		<Layout>
 			<About />
-			{!data && <Loading />}
 			<Recipes recipes={recipes} />
 			<Pagination
 				recordsPerPage={RECORDS_PER_PAGE}

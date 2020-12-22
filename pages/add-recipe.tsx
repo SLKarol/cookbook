@@ -5,7 +5,7 @@ import { useRouter } from 'next/router';
 import { ErrorApi } from 'types';
 
 import { useStore } from 'store';
-import { fetchGraphQl } from 'lib/apolloClient';
+import { fetchGraphQL } from 'lib/apolloClient';
 
 import Layout from 'components/Layout/Layout';
 import FormRecipe from 'blocks/FormRecipe/FormRecipe';
@@ -55,7 +55,7 @@ const AddRecipe: React.FC = () => {
 			query: mutationQuery,
 			variables: valuesToSave,
 		};
-		const resData = await fetchGraphQl(JSON.stringify(graphqlQuery));
+		const resData = await fetchGraphQL(JSON.stringify(graphqlQuery));
 		const { errors } = resData;
 		setWorking(false);
 		if (!errors) {

@@ -12,8 +12,8 @@ interface Props {
  * Вывести ошибки фетча GraphQL
  */
 const ErrorFetchGraphQL: FC<Props> = ({ errors }) => {
-	const errorView = errors.map((e) => (
-		<Message type="error">
+	const errorView = errors.map((e, idx) => (
+		<Message type="error" key={`${e.message}${e.status}${idx}`}>
 			{e.message}
 			<DataErrors data={e.data} />
 		</Message>

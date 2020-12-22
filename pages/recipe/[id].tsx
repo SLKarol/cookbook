@@ -1,7 +1,8 @@
-import { GetStaticProps } from 'next';
+import { useRouter } from 'next/router';
+import useSWR from 'swr';
 
-import { RecipeResponse } from 'types/recipe';
-import { fetchGraphQl } from 'lib/apolloClient';
+import { ResponseListRecipe } from 'types/recipe';
+import { fetchGraphQL } from 'lib/apolloClient';
 
 import Layout from 'components/Layout/Layout';
 import {
@@ -11,20 +12,8 @@ import {
 	Ingredients,
 	Creator,
 } from 'blocks/RecipeView';
-
-type TRecipe = {
-	data: {
-		recipe: RecipeResponse;
-	};
-};
-
-const queryRecipesId = `query {  
-  allRecipes {
-    recipes {
-      _id
-    }
-  }
-}`;
+import Loading from 'components/Loading/Loading';
+import ErrorFetchGraphQL from 'components/ErrorFetchGraphQL/ErrorFetchGraphQL';
 
 const queryRecipe = `query GetRecipe($recipeId: ID!) {
   recipe(id: $recipeId) {      
@@ -48,7 +37,32 @@ const queryRecipe = `query GetRecipe($recipeId: ID!) {
   }
 }`;
 
-const Recipe = ({ recipe }: { recipe: TRecipe }) => {
+const Recipe = () => {
+	const { query } = useRouter();
+	const { id = '' } = query;
+	const graphqlQuery = {
+		query: queryRecipe,
+		variables: { recipeId: id },
+	};
+	const { data } = useSWR<ResponseListRecipe>(
+		JSON.stringify(graphqlQuery),
+		fetchGraphQL
+	);
+	if (!data) {
+		return (
+			<Layout>
+				<Loading />
+			</Layout>
+		);
+	}
+	if (data.errors) {
+		return (
+			<Layout>
+				<ErrorFetchGraphQL errors={data.errors} />
+			</Layout>
+		);
+	}
+
 	const {
 		recipe: {
 			_id,
@@ -61,7 +75,7 @@ const Recipe = ({ recipe }: { recipe: TRecipe }) => {
 			name,
 			steps,
 		},
-	} = recipe.data;
+	} = data.data;
 
 	return (
 		<Layout>
@@ -77,41 +91,6 @@ const Recipe = ({ recipe }: { recipe: TRecipe }) => {
 			<RecipeAction id={_id} creatorId={creatorId} />
 		</Layout>
 	);
-};
-
-export async function getStaticPaths() {
-	const graphqlQuery = {
-		query: queryRecipesId,
-		variables: {},
-	};
-	const resData = await fetchGraphQl(JSON.stringify(graphqlQuery));
-	const paths = resData.data.allRecipes.recipes.map((r: { _id: string }) => ({
-		params: { id: r._id },
-	}));
-	return { paths, fallback: false };
-}
-
-export const getStaticProps: GetStaticProps = async ({ params }) => {
-	const graphqlQuery = {
-		query: queryRecipe,
-		variables: { recipeId: params?.id },
-	};
-	const resData = await fetchGraphQl(JSON.stringify(graphqlQuery));
-
-	if (resData.data === null) {
-		return {
-			props: {
-				errors: resData.errors,
-			},
-		};
-	}
-
-	return {
-		props: { recipe: resData },
-		// Re-generate the post at most once per second
-		// if a request comes in
-		revalidate: 1,
-	};
 };
 
 export default Recipe;

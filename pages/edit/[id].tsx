@@ -3,7 +3,7 @@ import { useRouter } from 'next/router';
 import { observer } from 'mobx-react-lite';
 
 import { ErrorApi } from 'types';
-import { fetchGraphQl } from 'lib/apolloClient';
+import { fetchGraphQL } from 'lib/apolloClient';
 import { useStore } from 'store';
 
 import Layout from 'components/Layout/Layout';
@@ -59,7 +59,7 @@ const Edit = () => {
 				query: queryRecipe,
 				variables: { recipeId: id },
 			};
-			const resData = await fetchGraphQl(JSON.stringify(graphqlQuery));
+			const resData = await fetchGraphQL(JSON.stringify(graphqlQuery));
 			const { recipe } = resData.data;
 			createRecipe(recipe);
 		}
@@ -77,7 +77,7 @@ const Edit = () => {
 			query: mutationQuery,
 			variables: valuesToSave,
 		};
-		const resData = await fetchGraphQl(JSON.stringify(graphqlQuery));
+		const resData = await fetchGraphQL(JSON.stringify(graphqlQuery));
 		const { errors } = resData;
 		setWorking(false);
 		if (!errors) {
