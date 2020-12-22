@@ -33,9 +33,10 @@ const queryRecipes = `query getRecipes($page: Int, $perPage: Int) {
 const ListRecipes: React.FC = () => {
 	const { query } = useRouter();
 	const { id = '' } = query;
+
 	const graphqlQuery = {
 		query: queryRecipes,
-		variables: { page: +id },
+		variables: { page: +id, perPage: RECORDS_PER_PAGE },
 	};
 	const { data } = useSWR<ResponsePreview>(
 		JSON.stringify(graphqlQuery),
