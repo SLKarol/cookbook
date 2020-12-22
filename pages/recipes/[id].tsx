@@ -45,6 +45,7 @@ const ListRecipes: React.FC = () => {
 	if (!data) {
 		return (
 			<Layout>
+				<About />
 				<Loading />
 			</Layout>
 		);
@@ -52,6 +53,7 @@ const ListRecipes: React.FC = () => {
 	if (data.errors) {
 		return (
 			<Layout>
+				<About />
 				<ErrorFetchGraphQL errors={data.errors} />
 			</Layout>
 		);
