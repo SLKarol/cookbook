@@ -21,6 +21,7 @@ export function getErrorMessage(error: any) {
 export const fetchGraphQl: FetchGraphQL = async (body) => {
 	//--- Вероятно, так и останусь на порту 3001
 	const PORT = parseInt(process.env.PORT || '3001', 10);
+	const HOSTNAME = process.env.HOSTNAME || 'localhost';
 	//--- Получить localStorage
 	const localStorage = globalThis.localStorage;
 	//--- Если есть токен, значит добавить его в заголовок авторизации
@@ -29,7 +30,7 @@ export const fetchGraphQl: FetchGraphQL = async (body) => {
 	if (token !== null) authHeader.append('Authorization', `Bearer ${token}`);
 	authHeader.append('Content-Type', 'application/json');
 
-	const response = await fetch(`http://localhost:${PORT}/graphql`, {
+	const response = await fetch(`http://${HOSTNAME}:${PORT}/graphql`, {
 		method: 'POST',
 		headers: authHeader,
 		body,
