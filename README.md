@@ -20,6 +20,8 @@ MONGODB_URI='mongodb+srv://loginDB:passwordDB@cluster/dbName'
 
 Локальный запуск: **npm run dev**.
 
+[`Кулинарная книга`](https://cookbook-next.herokuapp.com/recipes/1)
+
 ## Скриншот
 
 ![Скриншот](https://raw.githubusercontent.com/SLKarol/cookbook/main/screenshots/1.png)
