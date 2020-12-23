@@ -58,7 +58,6 @@ html {
 
 .main-head__logo {
   display: grid;
-  grid-template-columns: auto 1fr;
   grid-template-rows: auto auto;
 }
 
@@ -107,6 +106,10 @@ html {
   .main-nav__list {
     justify-content: space-between;
   }
+
+  .main-head__logo {
+    grid-template-columns: 1fr;
+  }
 }
 
 @media (min-width: 700px) {
@@ -140,6 +143,10 @@ html {
 
   .main-nav__list {
     justify-content: flex-end;
+  }
+
+  .main-head__logo {
+    grid-template-columns: auto 1fr;
   }
 }
 
