@@ -24,38 +24,6 @@ html {
   flex-wrap: wrap;
 }
 
-.main-nav__list .main-nav__link {
-  display: inline-block;
-  padding: 0.6em 1.2em;
-  background-color: #EFEFEF;
-  border-radius: 10px;
-  border-right: 1px solid #bbb;
-  border-bottom: 2px solid #bbb;
-  color: #666;
-  text-decoration: none;
-  text-transform: uppercase;
-  text-shadow: 1px 1px 1px #fff;
-  font-size: 1.1em;
-  margin: 0 0 0.6em 0;
-}
-
-.main-nav__list .main-nav__link:hover {
-  color: #666;
-  text-shadow: 1px 1px 0px #fff;
-  background-color: #EAFFC4;
-}
-
-.main-nav__list .main-nav__link--active {
-  color: #fff;
-  text-shadow: 1px 1px 1px #333;
-  font-weight: bold;
-  background-color: #A5C100;
-}
-
-.main-nav__list-item {
-  margin: auto;
-}
-
 .main-head__logo {
   display: grid;
   grid-template-rows: auto auto;
