@@ -199,28 +199,15 @@ html {
   line-height: auto;
 }
 
-/*--- Кнопка ---*/
 .button__button {
-  font-family: Arial, sans-serif;
   font-size: 1em;
   line-height: auto;
   background-color: #6D8901;
-  /* fallback for browsers that don´t support gradients */
-  background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#A5C100), to(#6D8901));
-  /* Safari 4+, Chrome 1-9 */
-  background-image: -moz-linear-gradient(top, #A5C100, #6D8901);
-  /* Firefox 3.6+ */
-  background-image: -o-linear-gradient(top, #A5C100, #6D8901);
-  /* Opera 11.10+ */
-  background-image: -webkit-linear-gradient(top, #A5C100, #6D8901);
-  /* Safari 5.1+, Mobile Safari, Chrome 10+ */
-  background-image: -ms-linear-gradient(top, #A5C100, #6D8901);
-  /* IE 10+ */
+
   border: 1px solid #799C01;
   border-radius: 5px;
   box-shadow: 0 1px 0 0 #9BCB76 inset;
-  color: white;
-  position: relative;
+  color: #ddd;
   text-shadow: 0 1px 0 #424F1C;
   text-decoration: none;
   margin: 15px 0;
@@ -229,16 +216,32 @@ html {
   padding: 0.3em 0.7em;
   display: inline-block;
   cursor: pointer;
+  position: relative;
+  transform: perspective(1px);
+  transition: color .2s ease-out;
+  overflow: hidden;
 }
 
-.button__button:hover {
+.button__button:enabled::before {
   background-color: #A5C100;
-  background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#6D8901), to(#A5C100));
-  background-image: -moz-linear-gradient(#6D8901, #A5C100);
-  background-image: -moz-linear-gradient(top, #6D8901, #A5C100);
-  background-image: -o-linear-gradient(top, #6D8901, #A5C100);
-  background-image: -webkit-linear-gradient(top, #6D8901, #A5C100);
-  background-image: -ms-linear-gradient(top, #6D8901, #A5C100);
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  top: 0;
+  content: '';
+  z-index: -1;
+  transition: transform .3s ease-out;
+  transform: scaleY(0);
+}
+
+.button__button:hover:enabled {
+  color: #fff;
+  transform: scaleY(1);
+}
+
+.button__button:hover::before {
+  transform: scaleY(1);
 }
 
 .button__button:disabled {
@@ -248,3 +251,7 @@ html {
   border: 1px solid #353631;
   box-shadow: none;
 }
+
+/* .button__button:not(disabled) {
+  background-color: tomato;
+} */
