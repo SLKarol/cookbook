@@ -8,15 +8,12 @@ interface Props {
 	current: boolean;
 }
 
-const NavItem: React.FC<Props> = ({ link, current, text }) => {
-	console.log('current :>> ', current);
-	return (
-		<li className={styles.container}>
-			<Link href={link}>
-				<a className={!current ? styles.item : styles.itemActive}>{text}</a>
-			</Link>
-		</li>
-	);
-};
+const NavItem: React.FC<Props> = ({ link, current, text }) => (
+	<li className={styles.container}>
+		<Link href={link}>
+			<a className={!current ? styles.item : styles.itemActive}>{text}</a>
+		</Link>
+	</li>
+);
 
 export default NavItem;
