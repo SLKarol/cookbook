@@ -1,0 +1,44 @@
+.container {
+  display: grid;
+  grid-template-columns: auto 1fr;
+}
+
+.link {
+  color: #669b02;
+  display: block;
+  font-family: roboto;
+  font-size: 20px;
+  padding: 0px 10px 10px;
+  position: relative;
+  text-decoration: none;
+  transition: color .2s ease-in-out;
+}
+
+.span {
+  display: block;
+  transition: transform .5s ease-in-out;
+}
+
+.link::after {
+  background-color: #669b02;
+  content: "";
+  position: absolute;
+  bottom: 5px;
+  height: 2px;
+  left: 0;
+  width: 100%;
+  transform: scaleX(0);
+  transition: transform .2s ease-in-out;
+}
+
+.link:hover {
+  color: #669b02;
+}
+
+.link:hover span {
+  transform: translateY(-3px)
+}
+
+.link:hover::after {
+  transform: scaleX(1);
+}

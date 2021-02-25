@@ -15,30 +15,22 @@
 }
 
 @media (min-width: 500px) {
-
   .preview {
     grid-template-columns: 1fr;
   }
-
 }
 
 @media (min-width: 700px) {
-
   .preview {
     grid-template-columns: 1fr 2fr;
   }
-
 }
 
-.link {
+.name {
   color: #669b02;
-
+  transition: color .2s ease-in-out;
 }
 
-.link:hover {
-  text-decoration: underline;
-}
-
-.link:visited {
-  opacity: 0.8;
+.name:hover {
+  color: #A5C100;
 }
