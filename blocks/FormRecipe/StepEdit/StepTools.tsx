@@ -4,6 +4,8 @@ import { useStore } from 'store';
 
 import styles from './step.module.css';
 
+import Button from 'components/Button/Button';
+
 interface Props {
 	canDeleteIt: boolean;
 	idStep: string;
@@ -15,35 +17,35 @@ const StepTools: React.FC<Props> = ({ canDeleteIt, idStep }) => {
 	} = useStore();
 	return (
 		<div>
-			<button
+			<Button
 				aria-label="Добавить шаг"
 				title="Добавить шаг"
 				type="button"
-				className={`button__button ${styles.button}`}
+				className={styles.button}
 				onClick={onAddStep}
 			>
 				Добавить шаг
-			</button>
+			</Button>
 			{canDeleteIt && (
-				<button
+				<Button
 					aria-label="Удалить шаг"
 					title="Удалить шаг"
 					data-step-id={idStep}
 					type="button"
-					className={`button__button ${styles.button}`}
+					className={styles.button}
 					onClick={onDeleteStep}
 				>
 					Удалить шаг
-				</button>
+				</Button>
 			)}
-			<button
+			<Button
 				data-step-id={idStep}
 				type="button"
-				className={`button__button ${styles.button}`}
+				className={styles.button}
 				onClick={onDeletePhoto}
 			>
 				Удалить фото
-			</button>
+			</Button>
 		</div>
 	);
 };

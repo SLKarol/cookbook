@@ -1,5 +1,8 @@
 import Link from 'next/link';
+
 import styles from './pagination.module.css';
+
+import Button from 'components/Button/Button';
 
 type Props = {
 	recordsPerPage: number;
@@ -29,12 +32,7 @@ const Pagination: React.FC<Props> = ({
 				{pageNumbers.map((number) => (
 					<li key={number} className={styles.li}>
 						<Link href={`/recipes/${number}`}>
-							<button
-								className="button__button"
-								disabled={busy || current === number}
-							>
-								{number}
-							</button>
+							<Button disabled={busy || current === number}>{number}</Button>
 						</Link>
 					</li>
 				))}

@@ -1,6 +1,8 @@
 import { useState, useEffect } from 'react';
-import Link from 'next/link';
 import { useRouter } from 'next/router';
+
+import Button from 'components/Button/Button';
+import ButtonLink from 'components/ButtonLink/ButtonLink';
 
 interface Props {
 	id: string;
@@ -23,21 +25,15 @@ const RecipeAction: React.FC<Props> = ({ id, creatorId }) => {
 	return (
 		<ul className={styles.ul}>
 			<li>
-				<button className="button__button" onClick={onClickBack}>
-					Назад
-				</button>
+				<Button onClick={onClickBack}>Назад</Button>
 			</li>
 			{availableAction && (
 				<>
 					<li className={styles.action}>
-						<Link href={`/edit/${id}`}>
-							<a className="button__button">Редактировать</a>
-						</Link>
+						<ButtonLink href={`/edit/${id}`} title="Редактировать" />
 					</li>
 					<li className={styles.actionLast}>
-						<Link href={`/delete/${id}`}>
-							<a className="button__button">Удалить</a>
-						</Link>
+						<ButtonLink href={`/delete/${id}`} title="Удалить" />
 					</li>
 				</>
 			)}

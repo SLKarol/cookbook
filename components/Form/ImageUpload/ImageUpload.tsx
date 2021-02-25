@@ -3,6 +3,7 @@ import Image from 'next/image';
 
 import { UploadComponentProps } from 'types/imageUpload';
 
+import Button from 'components/Button/Button';
 import PleaseSelectImage from './PleaseSelectImage';
 
 import styles from './styles.module.css';
@@ -66,13 +67,13 @@ class ImageUpload extends Component<UploadComponentProps, {}> {
 						<PleaseSelectImage error={error} required={required} />
 					)}
 				</div>
-				<button
-					className={`button__button ${styles.button}`}
+				<Button
+					className={styles.button}
 					type="button"
 					onClick={this.handleClick}
 				>
 					Загрузить фото
-				</button>
+				</Button>
 			</div>
 		);
 	}

@@ -8,6 +8,7 @@ import { fetchGraphQL } from 'lib/apolloClient';
 
 import Layout from 'components/Layout/Layout';
 import ErrorFetchGraphQL from 'components/ErrorFetchGraphQL/ErrorFetchGraphQL';
+import Button from 'components/Button/Button';
 
 import styles from './delete.module.css';
 
@@ -64,18 +65,13 @@ const Delete = () => {
 				Вы действительно хотите удалить рецепт <strong>{name}</strong>?
 			</div>
 			<div className={styles.footer}>
-				<button
-					type="button"
-					className="button__button"
-					disabled={working}
-					onClick={onDelete}
-				>
+				<Button type="button" disabled={working} onClick={onDelete}>
 					Удалить
-				</button>
+				</Button>
 				<Link href={`/recipe/${id}`}>
-					<button type="button" className="button__button" disabled={working}>
+					<Button type="button" disabled={working}>
 						Отмена
-					</button>
+					</Button>
 				</Link>
 			</div>
 			{errors && <ErrorFetchGraphQL errors={errors} />}
