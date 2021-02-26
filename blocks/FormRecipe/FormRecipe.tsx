@@ -63,7 +63,6 @@ const FormRecipe: React.FC<Props> = ({ operation, onSubmit, loading }) => {
 				<Input
 					caption="Название рецепта"
 					id="name"
-					className={styles.input}
 					value={name}
 					onChange={onChange}
 					valid={!checkFormValid || name.length > 1}
@@ -72,7 +71,6 @@ const FormRecipe: React.FC<Props> = ({ operation, onSubmit, loading }) => {
 				<TextArea
 					caption="Краткое описание"
 					id="description"
-					className={styles.input}
 					value={description}
 					onChange={onChange}
 					valid={!checkFormValid || description.length > 1}
@@ -81,7 +79,7 @@ const FormRecipe: React.FC<Props> = ({ operation, onSubmit, loading }) => {
 				<Input
 					caption="Время готовки"
 					id="cookingTime"
-					className={`${styles.input} ${styles.inputSmall}`}
+					className={styles.inputSmall}
 					value={cookingTime}
 					onChange={onChange}
 					valid={!checkFormValid || cookingTime.length > 1}
@@ -90,7 +88,6 @@ const FormRecipe: React.FC<Props> = ({ operation, onSubmit, loading }) => {
 				<TextArea
 					caption="Ингредиенты"
 					id="ingredients"
-					className={styles.input}
 					value={ingredients}
 					onChange={onChange}
 					valid={!checkFormValid || ingredients.length > 1}
