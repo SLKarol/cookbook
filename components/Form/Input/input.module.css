@@ -20,21 +20,11 @@
   border: 1px solid;
   border-color: #848484 #c1c1c1 #e1e1e1;
   color: #000;
-  outline: 0;
   padding: 2px 3px;
   font-size: 13px;
-  /*
-    Leaving out Helvetica Neue, to not throw off size="..."
-    on inputs. Arial is more reliable, on Windows and OS X.
-  */
   font-family: Arial, FreeSans, sans-serif;
   height: 2.3em;
-
-  /* IE7 */
-  *padding-top: 2px;
-  *padding-bottom: 1px;
-  *height: auto;
-
+  transition: box-shadow .2s ease-in-out;
 }
 
 .input:focus,
@@ -42,9 +32,8 @@
   -moz-box-shadow: #6C0 0 0 5px;
   -webkit-box-shadow: #6C0 0 0 5px;
   box-shadow: #6C0 0 0 5px;
-
-  /* for Opera */
   z-index: 1;
+  outline: none;
 }
 
 .input:disabled {
